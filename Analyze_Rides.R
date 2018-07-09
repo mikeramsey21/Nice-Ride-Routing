@@ -26,11 +26,11 @@ data <- data %>%
   mutate(Startingdate = date(mdy_hm(Start.date)), 
          Startinghour = hour(mdy_hm(Start.date)),
          Startingminute = minute(mdy_hm(Start.date)),
-         Startingweekday = wday(mdy_hm(Start.date)),
+         Startingweekday = wday(mdy_hm(Start.date),label = T),
          Endingdate = date(mdy_hm(End.date)), 
          Endinghour = hour(mdy_hm(End.date)),
          Endingminute = minute(mdy_hm(End.date)),
-         Endingweekday = wday(mdy_hm(Start.date)))
+         Endingweekday = wday(mdy_hm(Start.date), label = T))
 data$Start.date <- NULL
 data$End.date <- NULL
 

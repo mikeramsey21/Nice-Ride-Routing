@@ -7,6 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(lubridate)
 library(ggmap)
+library(data.table) # need this for Elizabeth's code
 
 # Import dataset
 rides <- read.csv("C:/Users/Elizabeth/Documents/Nice_ride_data_2016_season/Nice_ride_trip_history_2016_season.csv", na.strings=c(""))

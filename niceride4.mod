@@ -82,6 +82,9 @@ minimize distance: sum{i in V, j in V, w in W} D[i,j]*x[i,j,w];
 # Workers need to complete their tour in T hours
 s.t. time_cons {w in W}: sum{i in V, j in V} D[i,j]/speed*x[i,j,w] <= T;
 
+# Don't include vertices
+s.t. no_loops {w in W, i in V, j in V: i=j}: x[i,j,w]=0;
+
 # Ensure that all drivers depart from node 1
 s.t. dep_node1 {w in W, i in V: i=1}: sum{j in V} x[i,j,w]=1;
 
@@ -101,10 +104,11 @@ s.t. sub_cons1 {w in W, i in V: i = 1}: u[i,w]=1;
 s.t. sub_cons2 {w in W, i in V: i >= 2}: 2 <= u[i,w] <= card(V);
 # no subtours allowed
 s.t. sub_cons3 {w in W, i in V, j in V: i<>j and i >= 2 and j >= 2}: 
-u[i,w] - u[j,w] + card(V)*x[i,j,w]<=card(V)-1;
+# u[i,w] - u[j,w] + card(V)*x[i,j,w]<=card(V)-1;
+u[i,w]+1 <= u[j,w]+(card(V)-1)*(1-x[i,j,w]);
 # u[i,w] = 0 if the worker never visits i
 s.t. sub_cons4 {w in W, i in V}: u[i,w]<=sum{j in V} x[i,j,w]*card(V);
 
 # Choose the solver	
-# not sure which one is best? gurobi or cplex?
 option solver gurobi;
+# option solver cplex;
